@@ -15,8 +15,11 @@ $existingDataQuery = "SELECT * FROM supplements WHERE name='$name'";
 $existingDataResult = $mysqli->query($existingDataQuery);
 
 if ($existingDataResult->num_rows > 0) {
-  // 기존 데이터가 있는 경우 consumedAmount 업데이트
-  $updateQuery = "UPDATE supplements SET consumedAmount='$consumedAmount' WHERE name='$name'";
+  $row = $existingDataResult->fetch_assoc();
+  $dailyAmount = $row['dailyAmount'];
+
+  // 기존 데이터가 있는 경우 dailyAmount과 consumedAmount 업데이트
+  $updateQuery = "UPDATE supplements SET dailyAmount='$dailyAmount', consumedAmount='$consumedAmount' WHERE name='$name'";
 
   if ($mysqli->query($updateQuery)) {
     $response = array('success' => true);
@@ -25,7 +28,7 @@ if ($existingDataResult->num_rows > 0) {
   }
 } else {
   // 기존 데이터가 없는 경우 새로운 데이터 삽입
-  $insertQuery = "INSERT INTO supplements (name, consumedAmount) VALUES ('$name', '$consumedAmount')";
+  $insertQuery = "INSERT INTO supplements (name, dailyAmount, consumedAmount) VALUES ('$name', 0, '$consumedAmount')";
 
   if ($mysqli->query($insertQuery)) {
     $response = array('success' => true);
@@ -38,5 +41,4 @@ mysqli_close($mysqli);
 
 header('Content-Type: application/json');
 echo json_encode($response);
-
 ?>

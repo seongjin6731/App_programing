@@ -40,6 +40,3 @@ mysqli_close($mysqli);
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
-<script>
-  location.href = "main.html";
-</script>

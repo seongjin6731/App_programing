@@ -19,7 +19,3 @@ mysqli_close($mysqli);
 
 echo json_encode($response);
 ?>
-
-<script>
-  location.href = "main.html";
-</script>
