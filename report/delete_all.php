@@ -17,5 +17,6 @@ if ($mysqli->query($sql)) {
 
 mysqli_close($mysqli);
 
+header('Content-Type: application/json'); // JSON 응답을 명시
 echo json_encode($response);
 ?>
